@@ -1,0 +1,23 @@
+{
+  "name": "zai-hych-360",
+  "version": "1.0.0",
+  "description": "zhongart.com 为2019韩玉臣佛罗伦萨Palazzo Medici 个展拓展的360导览页面",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pushdev":"git add . && git commit -m   \"$npm_package_config_commitmessage\"  && git push origin master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carllx/hyuch360.git"
+  },
+  "author": "carllx",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carllx/hyuch360/issues"
+  },
+  "homepage": "https://github.com/carllx/hyuch360#readme",
+  "config": {
+    "commitmessage": "first update"
+  }
+}
