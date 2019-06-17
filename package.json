@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pushdev":"git add . && git commit -m   \"$npm_package_config_commitmessage\"  && git push origin master"
+    "pushdev": "git add . && git commit -m   \"$npm_package_config_commitmessage\"  && git push origin master"
   },
   "repository": {
     "type": "git",
@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/carllx/hyuch360#readme",
   "config": {
-    "commitmessage": "first update"
-  }
+    "commitmessage": "2nd update"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {}
 }
