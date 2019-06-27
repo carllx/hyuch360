@@ -1,0 +1,6 @@
+node_modules/
+# out/
+# 如果之前递交了,存在记录需要删除cach才能正常过考虑
+# git arm -r --cached .next/
+# cancel/
+# ps/
