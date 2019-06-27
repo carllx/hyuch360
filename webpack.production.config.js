@@ -8,6 +8,12 @@ const {
 module.exports = {
     mode: 'production',
     module: {
+        entry: './src/app.js',
+        output: {
+            filename: 'bundle.js',
+            path: path.resolve(__dirname, 'dist')
+        },
+ 
         rules: [{
             test: /\.m?js$/,
             exclude: /(node_modules|bower_components)/,
@@ -44,9 +50,5 @@ module.exports = {
             cache: true,
         }),
     ],
-    entry: './src/index.js',
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
-    }
+
 };

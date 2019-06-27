@@ -2,10 +2,10 @@
   "name": "zai-hych-360",
   "version": "1.0.0",
   "description": "zhongart.com 为2019韩玉臣佛罗伦萨Palazzo Medici 个展拓展的360导览页面",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "build_dev": "webpack   --config ./webpack.development.config.js",
-    "build_pro": "webpack   --config ./webpack.production.config.js" ,
+    "build_pro": "webpack   --config ./webpack.production.config.js",
     "dev": "webpack-dev-server --open --config ./webpack.development.config.js",
     "pushdev": "git add . && git commit -m   \"$npm_package_config_commitmessage\"  && git push origin master"
   },
@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/carllx/hyuch360#readme",
   "config": {
-    "commitmessage": "swith to webpack"
+    "commitmessage": "add title switch language ability"
   },
   "dependencies": {
     "aframe": "^0.9.2"
