@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/carllx/hyuch360#readme",
   "config": {
-    "commitmessage": "add title switch language ability"
+    "commitmessage": "add title switch language ability 2"
   },
   "dependencies": {
     "aframe": "^0.9.2"

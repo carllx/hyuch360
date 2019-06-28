@@ -7,12 +7,12 @@ const {
 
 module.exports = {
     mode: 'production',
+    entry: './src/app.js',
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'dist')
+    },
     module: {
-        entry: './src/app.js',
-        output: {
-            filename: 'bundle.js',
-            path: path.resolve(__dirname, 'dist')
-        },
  
         rules: [{
             test: /\.m?js$/,
