@@ -40,10 +40,7 @@ AFRAME.registerComponent("o_marker",{
 		
 		//create plane
 		this.plane = document.createElement('a-entity');
-		this.plane.setAttribute('o_plane',{
-			zOffset: 1,
-			
-		})
+		this.plane.setAttribute('o_plane',{});
 		// this.plane.setAttribute('scale',Object.values(this.scale))
 		// this.plane.object3D.scale.x = this.scale
 		this.plane.object3D.scale.copy(this.scale)
