@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/carllx/hyuch360#readme",
   "config": {
-    "commitmessage": "update data"
+    "commitmessage": "basic 360 guida"
   },
   "dependencies": {
     "aframe": "^0.9.2"

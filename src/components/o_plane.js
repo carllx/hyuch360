@@ -22,11 +22,11 @@ AFRAME.registerComponent("o_plane", {
             // debug
         })
 
-		this.el.addEventListener("click", () =>{
+		// this.el.addEventListener("click", () =>{
             // console.log("un oplane clicked");
-            this.el.emit('oclick',{},false);
+            // this.el.emit('oclick',{},false);
 			// this.el.setAttribute();
-		});
+		// });
 		this.el.addEventListener("mouseenter", (evt) =>{
 			console.log("zai   hover");
 		});

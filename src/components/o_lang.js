@@ -10,12 +10,13 @@ AFRAME.registerComponent("o_lang", {
             zOffset: 0.6,
             wrapCount:  3,
             align:'center',
+            
         })
         
         
         this.el.addEventListener("click",()=>{
             // this.onClick();
-            console.log(`emitting...change_lan to:${this.data.text}`);            
+            // console.log(`emitting...change_lan to:${this.data.text}`); 
             // this.el.emit("changeLanguage",null)
             // this.$marker.addState(this.data.text)
             this.markerELs= this.el.sceneEl.querySelectorAll('[o_marker]')

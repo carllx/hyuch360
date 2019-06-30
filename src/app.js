@@ -2,19 +2,28 @@
 // import _ from 'lodash';
 // import AFRAME from 'aframe';
 
-import * as OPERE from './opere';
+import * as OPERE from './static/opere';
+// const wix = require('./components/wix');
 
 // user components
 require('./components/o_marker.js');
 require('./components/o_lang.js');
+require('./components/o_door.js');
 
 
 
-
+// position:${item.location.split(',').map(Number)};无效在 o_marker内还是
+//  ["5.991556167602539", "-1.0102713108062744", "3.742217779159546"]
+// [0.8999999761581421, 2.299999952316284, 0.06839580088853836]
 const opere = OPERE.map(
 	item => `
 <a-entity 
 	o_marker="
+		position:${item.location.split(',')};
+		rotation:${item.rotation.split(',')};
+		scale:${item.dimension.split(',')};
+		quaternion:${item.quaternion.split(',')};
+		camera_id:${item.camera_id};
 		oid:${item.id};
 		year:${item.year};
 		height:${item.height};
@@ -22,7 +31,6 @@ const opere = OPERE.map(
 		mat_it:${item.mat_it};
 		mat_en:${item.mat_en};
 		mat_cn:${item.mat_cn};
-		matrix:${JSON.parse(item.matrix)};
 		title_en:${item.title_en};
 		title_cn:${item.title_cn};
 		title_it:${item.title_it}">
@@ -30,12 +38,61 @@ const opere = OPERE.map(
 `
 );
 
-window.onload = ()=>{
-	const $opere = document.querySelector("#opere");
-	$opere.innerHTML = opere.join("")
+
+const creatPorta = (index,onRoomId,position)=>{
+	const $porta = document.querySelector("#porta");
+	const port = document.createElement('a-sphere');
+	port.setAttribute('o_door',{'index':index,'onRoomId':onRoomId} )
+	port.setAttribute('radius',"0.4" )
+	port.setAttribute('position',position )
+	port.setAttribute('material',{color: '#131313', shader: 'flat'})
+	port.setAttribute('look-at',"[camera]")
+	port.setAttribute('geometry',{segmentsHeight: 12,segmentsWidth: 9})
+	$porta.appendChild( port );
+
 }
 
 
+const creatDubuggerCam = (name,position)=>{
+	const $scene = document.querySelector("#scene");
+	const port = document.createElement('a-sphere');
+	// port.setAttribute('o_door',{'index':index} )
+	port.setAttribute('radius',"0.4" )
+	port.setAttribute('position',position )
+	port.setAttribute('material',{color: 'yellow', shader: 'flat'})
+	port.setAttribute("text",{value:name, width:0.5, zOffset: 0.6, wrapCount:  3, align:'center',
+	})
+	// port.setAttribute('look-at',"[camera]")
+	port.setAttribute('geometry',{segmentsHeight: 12,segmentsWidth: 9})
+	$scene.appendChild( port );
+
+}
+
+window.onload = ()=>{
+	// opere_componets
+	const $opere = document.querySelector("#opere");
+	$opere.innerHTML = opere.join("")
+
+	// door_componets
+	creatPorta(1,2,'4.96167 -0.3 -3.42365');
+	creatPorta(2,1,'4.96167 0.3 -3.42365');
+	creatPorta(3,1,'0.446 0.3 2.81129');
+	creatPorta(1,3,'0.446 -0.3 3.81129');
+	//debugger Cam
+	creatDubuggerCam('cam1','4.895750045776367 -0.5246499180793762 0.3603135049343109')
+	creatDubuggerCam('cam2','4.56270694732666 -0.5246502161026001 -6.886636734008789')
+	creatDubuggerCam('cam3','-4.5805816650390625 -0.5246499180793762 2.2933177135087135e-8')
+
+	
+	
+}
+
+
+// const rooms = ROOMS.map(
+// 	item =>`
+	
+// 	`
+// )
 
 // AFRAME.registerComponent("spot", {
 // 	schema: {
