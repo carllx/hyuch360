@@ -5,8 +5,12 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <!-- <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script> -->
+    
+    <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="bundle.js"></script>
+    <!-- <meta aframe-injected="" name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,shrink-to-fit=no,user-scalable=no,minimal-ui,viewport-fit=cover"><meta aframe-injected="" name="mobile-web-app-capable" content="yes"><meta aframe-injected="" name="theme-color" content="black"> -->
     
 </head>
 
@@ -16,14 +20,22 @@
             <img id="room1" crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_17f6e6be9bf04bacb9c9d8a485674c4a~mv2_d_4096_2048_s_2.jpg/v1/fit/w_2048,h_2048/1f2952_17f6e6be9bf04bacb9c9d8a485674c4a~mv2_d_4096_2048_s_2.jpg">
             <img id="room2" crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_ec85ddc56bfb4486a8b7562e3b3a2d41~mv2_d_4096_2048_s_2.jpg/v1/fit/w_2048,h_2048/1f2952_ec85ddc56bfb4486a8b7562e3b3a2d41~mv2_d_4096_2048_s_2.jpg">
             <img id="room3" crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_f1184c50096d4f829be00fa754f65db0~mv2_d_4096_2048_s_2.jpg/v1/fit/w_2048,h_2048/1f2952_f1184c50096d4f829be00fa754f65db0~mv2_d_4096_2048_s_2.jpg">
+            <img id="CRISTINAACIDINI"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_efe8187cdb344d11b52ed85a9d7e7ab2~mv2.png/v1/fit/w_200,h_200/1f2952_efe8187cdb344d11b52ed85a9d7e7ab2~mv2.png">
+            <img id="DARIONARDELLA"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_efe8187cdb344d11b52ed85a9d7e7ab2~mv2.png/v1/fit/w_200,h_200/1f2952_efe8187cdb344d11b52ed85a9d7e7ab2~mv2.png">
+            <img id="FANDIAN"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_3d5bb3455a6e413cac81decb08d63711~mv2.png/v1/fit/w_200,h_200/1f2952_3d5bb3455a6e413cac81decb08d63711~mv2.png">
+            <img id="SHANGHUI"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_adfb5dd00a1d435ab7d0e1d809253b10~mv2.png/v1/fit/w_200,h_200/1f2952_adfb5dd00a1d435ab7d0e1d809253b10~mv2.png">
+            <img id="SHAODAZHEN"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_3dee870065de44f8a6bc2193323890b8~mv2.png/v1/fit/w_200,h_200/1f2952_3dee870065de44f8a6bc2193323890b8~mv2.png">
+            <img id="TOMMASOSACCHI"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_0bf59d9117834976a7b235872683ce6c~mv2.png/v1/fit/w_200,h_200/1f2952_0bf59d9117834976a7b235872683ce6c~mv2.png">
+            <img id="VINCENZOVACCARO"  crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_adfb5dd00a1d435ab7d0e1d809253b10~mv2.png/v1/fit/w_200,h_200/1f2952_adfb5dd00a1d435ab7d0e1d809253b10~mv2.png">
+
         </a-asset>
 
         <a-sky id="background" src="#room1" rotation="0 -90 0"></a-sky>
 
-        <a-entity id="cam" camera position="4.895750045776367 -1.2412012815475464 0.3603135347366333" look-controls>
+        <a-entity id="cam" camera  position="4.895750045776367 -1.2412012815475464 0.3603135347366333" look-controls>
             
             <!-- cursor -->
-            <a-entity cursor="fuse:true;fuseTimeout:1000;" geometry="primitive:ring;radiusInner:0.017;radiusOuter:0.02"
+            <a-entity  cursor="fuse:true;fuseTimeout:1000; rayOrigin: mouse;" raycaster="objects: [raycastable]" geometry="primitive:ring;radiusInner:0.017;radiusOuter:0.02"
                 position="0 0 -1.8" material="shader:flat;color:#F2F5F3"
                 animation__mouseenter__size="property:scale;to:5 5 5;startEvents:mouseenter;dur:1000;easing:easeOutQuart;"
                 animation__mouseleave__size="property:scale;to:1 1 1;startEvents:mouseleave;dur:300;easing:easeOutQuart;"
@@ -46,10 +58,10 @@
 
         <!-- Language componet -->
         <a-entity position="0 -2 -3" >
-                <a-sphere radius="0.2" position="-1 0 0" material="color: #131313; shader: flat;"
+                <a-sphere radius="0.2" position="-1 0 0" material="color: #131313; shader: flat;" raycastable
                     look-at="[camera]" geometry="segmentsHeight: 12; segmentsWidth: 9" o_lang="text:it;"  >    
                 </a-sphere>
-                <a-sphere radius="0.2" position="1 0 0" material="color: #131313; shader: flat;"
+                <a-sphere radius="0.2" position="1 0 0" material="color: #131313; shader: flat;" raycastable
                     look-at="[camera]" geometry="segmentsHeight: 12; segmentsWidth: 9" o_lang="text:en;"  >
                 </a-sphere>
             </a-entity>

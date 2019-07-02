@@ -8,6 +8,7 @@ AFRAME.registerComponent("o_door", {
     },
     init:function(){
         this.markerELs= this.el.sceneEl.querySelectorAll('[o_marker]')
+        // this.filterEls= this.el.sceneEl.querySelectorAll('[room_filter]')
         this.doorELs= this.el.sceneEl.querySelectorAll('[o_door]')
         this.sky = this.el.sceneEl.querySelector('#background');
         this.cam = this.el.sceneEl.querySelector('#cam');
@@ -28,17 +29,24 @@ AFRAME.registerComponent("o_door", {
 
         // 隐藏听命
 		if(this.data.onRoomId === 1){
-			this.el.setAttribute('visible', true);
+            this.el.setAttribute('visible', true);
+            this.el.setAttribute('raycastable','')
 		}else{
 			this.el.setAttribute('visible', false);
         }
+
+
         this.el.addEventListener("onRoom", (evt )=> {
                 
             if(this.data.onRoomId === evt.detail.id){
                 // debugger
                 this.el.setAttribute('visible', true);
+				this.el.setAttribute('raycastable','')
+                
             }else{
                 this.el.setAttribute('visible', false);
+				this.el.removeAttribute('raycastable','')
+                
             }
         })
 
@@ -54,6 +62,7 @@ AFRAME.registerComponent("o_door", {
             cam.setAttribute('position', {x :cam_loc[0],y :cam_loc[1],z :cam_loc[2]})
 
             
+            // for (let i = 0; i < this.filterEls.length; i++) {
             for (let i = 0; i < this.markerELs.length; i++) {
                 const el = this.markerELs[i];
                 el.emit('onRoom',{id:this.data.index},false)

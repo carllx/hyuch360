@@ -1,4 +1,4 @@
-const comment = [
+module.exports =[
     {
       "title_it": "STRADA DEL PELLEGRINAGGIO",
       "title_en": "PILGRIMAGE ROUTE",
