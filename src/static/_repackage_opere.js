@@ -33,10 +33,12 @@ const data = OPERE.map((opr) => {
     // ['CRISTINA ACIDINI','DARIO NARDELLA','FAN DI’AN','SHANG HUI','SHAO DAZHEN','TOMMASO SACCHI','VINCENZO VACCARO',]
    
     for (let i = 0; i < profs.length; i++) {
-        
+        // if(=='TOMMASO SACCHI')
         const p = profs[i];
         const prof_detail = PROF.filter(j=>j.name==p)[0]
+        
         const p_comment = comment_about_opere.filter((c)=>c.prof_name==p)
+        console.log(`${opr.title_it}\t${p}\tcomment\t${p_comment.length}\t个`)
         if (p_comment.length==0) continue;
         const p_comment_it = p_comment.filter((c)=>c.lan=='it');
         const p_comment_en = p_comment.filter((c)=>c.lan=='en');
