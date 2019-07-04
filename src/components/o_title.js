@@ -2,14 +2,14 @@ AFRAME.registerComponent("o_title", {
 	schema: {
 		value: { type: 'string' },
 		Zoffset: { default: 1, type: "number" },
-		align: { default: 'left' },
-		anchor: { default: 'center' },
-		letterSpacing: { default: -1.360 },
+		align: { type: 'string', default: 'left' },
+		anchor: { type: 'string', default: 'center' },
+		letterSpacing: { type: 'number' ,default: -1.360 },
 		yOffset: { type: 'number' },
-		show: { default: false },
+		show: { type: 'boolean',default: false },
 		// showTime: { default: ACTIVE_TIME },
-		width: { default: 1 },
-		wrapCount: { default: 20 },
+		width: { type: 'number' , default: 1 },
+		wrapCount: { type: 'number' ,default: 20 },
 		
 	},
 	init: function() {

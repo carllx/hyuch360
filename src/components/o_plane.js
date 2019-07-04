@@ -1,6 +1,6 @@
 AFRAME.registerComponent("o_plane", {
 	schema: {
-		color: { default: "red", type: "color" },
+		color: { default: "#7b0000", type: "color" },
 	},
 	init: function() {
 		this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1);

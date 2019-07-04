@@ -4,6 +4,8 @@ require('./o_plane.js');
 require('./o_title.js');
 require('./o_prof.js');
 
+
+
 AFRAME.registerComponent("o_marker",{
 	// dependencies: ['o_lang'],
 	// multipel:true,
@@ -55,6 +57,8 @@ AFRAME.registerComponent("o_marker",{
 		this.$prof.setAttribute('position', `0 -1 0.3`);
 		this.$prof.setAttribute('look-at', "[camera]");
 		this.el.appendChild( this.$prof );
+
+		
 		
 		// 隐藏听命
 		if(this.data.camera_id === 1){
@@ -82,6 +86,7 @@ AFRAME.registerComponent("o_marker",{
 			const data=this.data
 			this.$title.setAttribute("text", {value: data[`title_${evt.detail.value}`].toUpperCase()});
 			this.$prof.setAttribute("o_prof", {value: data[`prof_${evt.detail.value}`]});
+			// debugger
 
 		});
 	}//init 

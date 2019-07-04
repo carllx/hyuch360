@@ -9,7 +9,8 @@ const OPERE = require('./static/opere_package.js');
 require('./components/o_marker.js');
 require('./components/o_lang.js');
 require('./components/o_door.js');
-require('./components/boardo.js');
+// require('./components/o_boardo.js');
+
 
 
 
