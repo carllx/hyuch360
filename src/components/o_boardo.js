@@ -42,7 +42,7 @@ AFRAME.registerComponent("o_boardo", {
         $close.addEventListener("click", (evt)=> {
 
             // console.log(this.el.children[0].components.text.attrValue)
-            console.log(evt.target.parentEl.children[0].components.text.attrValue)
+            // console.log(evt.target.parentEl.children[0].components.text.attrValue)
             // debugger
             evt.target.removeAttribute('raycastable','')
             // $close.removeAttribute('raycastable','')
