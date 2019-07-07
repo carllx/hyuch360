@@ -85,10 +85,27 @@ AFRAME.registerComponent("o_marker",{
 
 			const data=this.data
 			this.$title.setAttribute("text", {value: data[`title_${evt.detail.value}`].toUpperCase()});
-			this.$prof.setAttribute("o_prof", {value: data[`prof_${evt.detail.value}`]});
-			// debugger
+			// EL prof
+			// this.$prof.setAttribute("o_prof", {value: data[`prof_${evt.detail.value}`]});
+			this.$prof.remove()
+
+			// create Prof
+			this.$prof = document.createElement('a-entity');
+			this.$prof.setAttribute('o_prof',{value: data[`prof_${evt.detail.value}`]});
+			this.$prof.setAttribute('position', `0 -1 0.3`);
+			this.$prof.setAttribute('look-at', "[camera]");
+			this.el.appendChild( this.$prof );
 
 		});
-	}//init 
+	},//init 
+	update:function(){
+		// create Prof
+		// debugger
+		// this.$prof = document.createElement('a-entity');
+		// this.$prof.setAttribute('o_prof',{value:this.data.prof_it});
+		// this.$prof.setAttribute('position', `0 -1 0.3`);
+		// this.$prof.setAttribute('look-at', "[camera]");
+		// this.el.appendChild( this.$prof );
+	}
 });
 

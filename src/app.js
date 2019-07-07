@@ -9,6 +9,7 @@ const OPERE = require('./static/opere_package.js');
 require('./components/o_marker.js');
 require('./components/o_lang.js');
 require('./components/o_door.js');
+require('./components/preloader.js');
 // require('./components/o_boardo.js');
 
 
@@ -19,7 +20,6 @@ require('./components/o_door.js');
 // [0.8999999761581421, 2.299999952316284, 0.06839580088853836]
 
 const creatMarkers = ()=>{
-	
 	const $opere = document.querySelector("#opere");
 	OPERE.forEach((o)=>{
 
@@ -45,7 +45,17 @@ const creatMarkers = ()=>{
 		$opere.appendChild( $marker );
 	})
 }
-
+const createLoader = (srcs)=>{
+	THREE.Cache.enabled =true
+	const $scene = document.querySelector("#scene");
+	for (let i = 0; i < srcs.length; i++) {
+		const src = srcs[i];
+		const $asset = document.createElement('a-asset-item');
+		$asset.setAttribute('src', src);
+	}
+	
+// 
+}
 
 const creatPorta = (index,onRoomId,position)=>{
 	const $porta = document.querySelector("#porta");
@@ -78,6 +88,21 @@ const creatDubuggerCam = (name,position)=>{
 }
 
 window.onload = ()=>{
+	// console.log(document.querySelector('a-assets').fileLoader);
+	// document.querySelector('scene').load.onProgress = (xhr)=>{
+	// 	console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	// }
+	// console.log(document.querySelector('a-assets').fileLoader);
+	// debugger
+	
+	// THREE.Cache.enabled = true
+	// const fileLoader =document.querySelector('a-assets').fileLoader
+	// fileLoader.manager.onProgress = (url,itemLoaded,itemTotal)=>{
+	// 	// debugger
+	// 	console.log(`url:${url} itemLoaded:${itemLoaded} itemTotal:${itemTotal}` );
+	// 		// console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+	// }
+	// debugger
 	// opere_componets
 	const $opere = document.querySelector("#opere");
 	creatMarkers();

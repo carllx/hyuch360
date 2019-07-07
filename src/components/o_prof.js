@@ -14,9 +14,10 @@ AFRAME.registerComponent("o_prof", {
     schema: {
         value:{type:'array'}
     },
+    // init:function(){},
     init: function (){
         
-        
+        // debugger
         for (let i = 0; i < this.data.value.length; i++) {
             const element = this.data.value[i];
             // EL  name
@@ -31,7 +32,6 @@ AFRAME.registerComponent("o_prof", {
             $boardo.setAttribute('position', `0 0 2`);
             $boardo.setAttribute('look-at', "[camera]");
             $name.appendChild( $boardo );
-            debugger
 
             //EL avatar
             const $avatar = document.createElement('a-image');
@@ -73,9 +73,10 @@ AFRAME.registerComponent("o_prof", {
     },
     // update:function(oldData){
     //     if(oldData!==this.data) {debugger}
+    //     for (let i = 0; i < this.data.value.length; i++) {
+    //         const element = this.data.value[i];
+    //     }
         
     // },
-    // update:function(){
-    //     debugger
-    // }
+    
 })
