@@ -4,12 +4,13 @@
 
 const OPERE = require('./static/opere_package.js');
 // const wix = require('./components/wix');
-
+require('./state.js');
 // user components
-require('./components/o_marker.js');
+require('./components/o_opere.js');
 require('./components/o_lang.js');
 require('./components/o_door.js');
 require('./components/preloader.js');
+
 // require('./components/o_boardo.js');
 
 
@@ -24,7 +25,9 @@ const creatMarkers = ()=>{
 	OPERE.forEach((o)=>{
 
 		const $marker = document.createElement('a-entity');
-		$marker.setAttribute('o_marker',{
+		// $marker.setAttribute('bind__o_opere','language:language')
+		$marker.setAttribute('o_opere',{
+			// language:'',
 			position: o.location,
 			rotation: o.rotation,
 			scale: o.dimension,
@@ -88,23 +91,8 @@ const creatDubuggerCam = (name,position)=>{
 }
 
 window.onload = ()=>{
-	// console.log(document.querySelector('a-assets').fileLoader);
-	// document.querySelector('scene').load.onProgress = (xhr)=>{
-	// 	console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-	// }
-	// console.log(document.querySelector('a-assets').fileLoader);
-	// debugger
-	
-	// THREE.Cache.enabled = true
-	// const fileLoader =document.querySelector('a-assets').fileLoader
-	// fileLoader.manager.onProgress = (url,itemLoaded,itemTotal)=>{
-	// 	// debugger
-	// 	console.log(`url:${url} itemLoaded:${itemLoaded} itemTotal:${itemTotal}` );
-	// 		// console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
-	// }
-	// debugger
-	// opere_componets
-	const $opere = document.querySelector("#opere");
+	// AFRAME.utils.device.isMobile ()
+	// const $opere = document.querySelector("#opere");
 	creatMarkers();
 	// door_componets
 	creatPorta(1,2,'4.96167 -0.3 -3.42365');

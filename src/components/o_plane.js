@@ -28,7 +28,7 @@ AFRAME.registerComponent("o_plane", {
 			// this.el.setAttribute();
 		// });
 		this.el.addEventListener("mouseenter", (evt) =>{
-			console.log("zai   hover");
+			// console.log("zai   hover");
 		});
 	}
 });

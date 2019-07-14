@@ -1,12 +1,9 @@
-
-
 require('./o_plane.js');
-require('./o_title.js');
 require('./o_prof.js');
 
 
 
-AFRAME.registerComponent("o_marker",{
+AFRAME.registerComponent("o_opere",{
 	// dependencies: ['o_lang'],
 	// multipel:true,
 	schema: {
@@ -19,8 +16,7 @@ AFRAME.registerComponent("o_marker",{
 		year: {type:'string'},
 		height: {type:'number'},
 		width: {type:'number'},
-		language:{type:'string',default:'it'},
-		// it_obj:{type:'object'},
+		language:{type:'string'},
 		prof_it: {type:"array"},
 		prof_en: {type:"array"},
 		mat_it: {type:'string'},
@@ -33,17 +29,15 @@ AFRAME.registerComponent("o_marker",{
 		const position = this.data.position
 		const rotation = this.data.rotation
 		const scale = this.data.scale
-		
 		this.el.object3D.position.set(position[0],position[1],position[2])
 		this.el.object3D.rotation.set(rotation[0],rotation[1],rotation[2])
 		
-		
+
 		// Create title  
 		this.$title = document.createElement("a-entity");
-		this.$title.setAttribute("o_title", {
-			value: this.data.title_it.toUpperCase(),
-		});
+		this.$title.setAttribute('text',{value:this.data[`title_${this.data.language}`]})
 		this.el.appendChild( this.$title );
+
 		
 		//create plane
 		this.plane = document.createElement('a-entity');
@@ -52,19 +46,14 @@ AFRAME.registerComponent("o_marker",{
 		this.el.appendChild( this.plane );
 
 		// create Prof
-		this.$prof = document.createElement('a-entity');
-		this.$prof.setAttribute('o_prof',{value:this.data.prof_it});
-		this.$prof.setAttribute('position', `0 -1 0.3`);
-		this.$prof.setAttribute('look-at', "[camera]");
-		this.el.appendChild( this.$prof );
-
+		this.creatProf('en')
+		
 		
 		
 		// 隐藏听命
 		if(this.data.camera_id === 1){
 
 			this.el.setAttribute('visible', true);
-			this.plane.setAttribute('raycastable','')
 		}else{
 			this.el.setAttribute('visible', false);
 		}
@@ -73,39 +62,40 @@ AFRAME.registerComponent("o_marker",{
 
 			if(this.data.camera_id === evt.detail.id){
 				this.el.setAttribute('visible', true);
-				this.plane.setAttribute('raycastable','')
 			}else{
 				this.el.setAttribute('visible', false);
-				this.plane.removeAttribute('raycastable','')
 			}
 		})
 
 
 		this.el.addEventListener("changeLanguage", (evt )=> {
-
 			const data=this.data
 			this.$title.setAttribute("text", {value: data[`title_${evt.detail.value}`].toUpperCase()});
-			// EL prof
-			// this.$prof.setAttribute("o_prof", {value: data[`prof_${evt.detail.value}`]});
-			this.$prof.remove()
+			// EL prof -remove
+			this.$prof_group.remove()
 
 			// create Prof
-			this.$prof = document.createElement('a-entity');
-			this.$prof.setAttribute('o_prof',{value: data[`prof_${evt.detail.value}`]});
-			this.$prof.setAttribute('position', `0 -1 0.3`);
-			this.$prof.setAttribute('look-at', "[camera]");
-			this.el.appendChild( this.$prof );
+			this.creatProf(evt.detail.value)
 
 		});
 	},//init 
 	update:function(){
-		// create Prof
-		// debugger
-		// this.$prof = document.createElement('a-entity');
-		// this.$prof.setAttribute('o_prof',{value:this.data.prof_it});
-		// this.$prof.setAttribute('position', `0 -1 0.3`);
-		// this.$prof.setAttribute('look-at', "[camera]");
-		// this.el.appendChild( this.$prof );
+		// this.$title.setAttribute('text',{value:this.data[`title_${this.data.language}`]})
+	},
+	creatProf:function(language){
+		this.$prof_group = document.createElement('a-entity');
+		for (let i = 0; i < this.data[`prof_${language}`].length; i++) {
+			
+			const prof_item = this.data[`prof_${language}`][i];
+			const $prof = document.createElement('a-entity');
+			$prof.setAttribute('position', `${0.7*i} -1 0.5`);//一字排开
+			$prof.setAttribute('o_prof',{value:[prof_item]});
+			$prof.setAttribute('look-at', "[camera]");
+			this.$prof_group.appendChild( $prof );
+			
+		}
+		this.el.appendChild( this.$prof_group );
 	}
+	
 });
 
