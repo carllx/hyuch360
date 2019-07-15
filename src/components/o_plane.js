@@ -6,9 +6,10 @@ AFRAME.registerComponent("o_plane", {
 		this.geometry = new THREE.PlaneBufferGeometry(1, 1, 1);
 		this.material = new THREE.LineBasicMaterial({
 			color: this.data.color,
-			linewidth: 5,
+			wireframe:true,
+			wireframeLinewidth: 5,
 			transparent: true,
-			opacity: 0.2
+			opacity: 0
 		});
 		this.mesh = new THREE.Mesh(this.geometry, this.material);
 		this.el.setObject3D("mesh", this.mesh);

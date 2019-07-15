@@ -17,18 +17,22 @@ AFRAME.registerComponent("o_prof", {
     schema: {
         value:{type:'array'}
     },
-    position : new THREE.Vector3(0, 0, 0),
+    multiple:true,
+    // position : new THREE.Vector3(0, 0, 0),
     
     // init:function(){},
     init: function (){
+        // debugger
         const element = this.data.value[0];
         const $EL = this.el
         $EL.setAttribute('look-at', "[camera]");
-        
+        let position = new THREE.Vector3(0, 0, 0);
+        position = position.copy($EL.object3D.position)
         // this.position = $EL.object3D.position
-        this.position.copy( $EL.object3D.position );
+        // position.copy( $EL.object3D.position );
+        // debugger
         
-        const position = this.position.copy( $EL.object3D.position );
+        // const position = this.position.copy( $EL.object3D.position );
         // const position = $EL.object3D.position;
         // EL area professore
         const $area_prof = document.createElement('a-entity');
@@ -46,7 +50,8 @@ AFRAME.registerComponent("o_prof", {
         $avatar.setAttribute('height',0.4);
         $avatar.setAttribute('raycastable','')
         $avatar.addEventListener('click',(evt)=>{
-            $EL.emit('open','')
+            // debugger
+            $EL.emit('open',{onProf:evt.detail.intersection.object.geometry.uuid,distance:evt.detail.intersection.distance})
             
             // EL $close
             $close.setAttribute('raycastable','')
@@ -69,7 +74,7 @@ AFRAME.registerComponent("o_prof", {
             $area_comment.appendChild($pane )
             // $pane.setAttribute('text',{font:'sourcecodepro',value:`${element['comment'][i]}..`,opacity:0,transparent: true});
             $pane.setAttribute('look-at', "[camera]");
-            $pane.setAttribute('text',{value:`${element['comment'][i]}..`,opacity:0,transparent: true,wrapCount:30});
+            $pane.setAttribute('text',{value:`${element['comment'][i]}`,opacity:0,transparent: true,wrapCount:30});
             //get text height&width
             $pane.setAttribute('geometry',{primitive: 'plane', height: 1.2, width: 2});
             $pane.setAttribute('material',{shader: 'flat',color:'#565182',opacity:0,transparent: true});
@@ -104,7 +109,7 @@ AFRAME.registerComponent("o_prof", {
             
             // debugger
             console.log('open');
-            
+            const distance = evt.detail.distance
             //clean
             AFRAME.scenes[0].emit('activeProf', {onProf:$EL.object3D.uuid})
             if (document.querySelector('#opened')) document.querySelector('#opened').emit('close')
@@ -120,7 +125,7 @@ AFRAME.registerComponent("o_prof", {
                 duration: 250
             });
             tl.add({targets: document.querySelector('a-sky').components.material.material.color,r: 0.5, g: 0.5, b: 0.5,duration: 1000})
-            .add({targets: $EL.object3D.position,x: 0,y: 0,z: 2},'-=600')
+            .add({targets: $EL.object3D.position,x: 0,y: 0,z: distance-3},'-=600')
             .add({targets: $area_prof.object3D.position,x: -0.5,y: 0.7,z: 0})
             $area_comment.querySelectorAll('[text]').forEach(item => {
                 tl.add({targets: item.components.text.shaderObject.uniforms.opacity, value:1});
@@ -129,26 +134,25 @@ AFRAME.registerComponent("o_prof", {
         
         const animeClose=evt=>{
             console.log('close')
-            console.log(position);
             // debugger
             // Animation
             let tl = AFRAME.ANIME.timeline({
                 easing: 'easeOutExpo',
                 // delay: function(el, i) { return i * 100; },
-                duration: 200,
+                duration: 150,
                 complete:function(){
                     console.log(this.position)
                     $area_comment.setAttribute('visible', false);
                     $area_comment.removeAttribute('id', 'opened');
                 }
-            },'-=150')
-            tl
-            .add({targets: document.querySelector('a-sky').components.material.material.color,r: 1, g: 1, b: 1})
-            .add({targets: $EL.object3D.position,...position})
-            .add({targets: $area_prof.object3D.position,x: 0,y: 0,z: 0,duration: 700});
+            })
             $area_comment.querySelectorAll('[text]').forEach(item => {
                 tl.add({targets: item.components.text.shaderObject.uniforms.opacity, value:0,duration: 100});
             })
+            tl
+            .add({targets: document.querySelector('a-sky').components.material.material.color,r: 1, g: 1, b: 1})
+            .add({targets: $EL.object3D.position,...position})
+            .add({targets: $area_prof.object3D.position,x: 0,y: 0,z: 0,duration: 700},'-=150');
         }
         $EL.addEventListener("close", animeClose)
     }

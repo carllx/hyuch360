@@ -7,7 +7,7 @@ AFRAME.registerComponent("o_door", {
         onRoomId:{type:'int'},
     },
     init:function(){
-        this.markerELs= this.el.sceneEl.querySelectorAll('[o_marker]')
+        this.markerELs= this.el.sceneEl.querySelectorAll('[o_opere]')
         // this.filterEls= this.el.sceneEl.querySelectorAll('[room_filter]')
         this.doorELs= this.el.sceneEl.querySelectorAll('[o_door]')
         this.sky = this.el.sceneEl.querySelector('#background');

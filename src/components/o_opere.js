@@ -16,7 +16,7 @@ AFRAME.registerComponent("o_opere",{
 		year: {type:'string'},
 		height: {type:'number'},
 		width: {type:'number'},
-		language:{type:'string'},
+		language:{type:'string',default :'en'},
 		prof_it: {type:"array"},
 		prof_en: {type:"array"},
 		mat_it: {type:'string'},
@@ -35,15 +35,15 @@ AFRAME.registerComponent("o_opere",{
 
 		// Create title  
 		this.$title = document.createElement("a-entity");
-		this.$title.setAttribute('text',{value:this.data[`title_${this.data.language}`]})
+		this.$title.setAttribute('text',{value:this.data[`title_${this.data.language}`],wrapCount:15})
 		this.el.appendChild( this.$title );
 
 		
 		//create plane
-		this.plane = document.createElement('a-entity');
-		this.plane.setAttribute('o_plane',{});
-		this.plane.object3D.scale.set(scale[0],scale[1],scale[2])
-		this.el.appendChild( this.plane );
+		// this.plane = document.createElement('a-entity');
+		// this.plane.setAttribute('o_plane',{});
+		// this.plane.object3D.scale.set(scale[0],scale[1],scale[2])
+		// this.el.appendChild( this.plane );
 
 		// create Prof
 		this.creatProf('en')
@@ -88,8 +88,8 @@ AFRAME.registerComponent("o_opere",{
 			
 			const prof_item = this.data[`prof_${language}`][i];
 			const $prof = document.createElement('a-entity');
-			$prof.setAttribute('position', `${0.7*i} -1 0.5`);//一字排开
-			$prof.setAttribute('o_prof',{value:[prof_item]});
+			$prof.setAttribute('position', `${0.7*i} -1 0.1`);//一字排开
+			$prof.setAttribute(`o_prof`,{value:[prof_item]});
 			$prof.setAttribute('look-at', "[camera]");
 			this.$prof_group.appendChild( $prof );
 			

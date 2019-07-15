@@ -70,6 +70,8 @@ const creatPorta = (index,onRoomId,position)=>{
 	port.setAttribute('material',{color: '#131313', shader: 'flat'})
 	port.setAttribute('look-at',"[camera]")
 	port.setAttribute('geometry',{segmentsHeight: 12,segmentsWidth: 9})
+	port.setAttribute('animation',{property: 'rotation', to: '0 360 0', loop: true, dur: 7000,easing:'linear'})
+	
 	$porta.appendChild( port );
 
 }
@@ -95,10 +97,10 @@ window.onload = ()=>{
 	// const $opere = document.querySelector("#opere");
 	creatMarkers();
 	// door_componets
-	creatPorta(1,2,'4.96167 -0.3 -3.42365');
-	creatPorta(2,1,'4.96167 0.3 -3.42365');
-	creatPorta(3,1,'0.446 0.3 2.81129');
-	creatPorta(1,3,'0.446 -0.3 3.81129');
+	creatPorta(1,2,'4.96167 -2 -1');
+	creatPorta(2,1,'4.96167 -2 -6');
+	creatPorta(3,1,'0.446 -2 2.81129');
+	creatPorta(1,3,'2.5 -2 2.5');
 	//debugger Cam
 	// creatDubuggerCam('cam1','4.895750045776367 -0.5246499180793762 0.3603135049343109')
 	// creatDubuggerCam('cam2','4.56270694732666 -0.5246502161026001 -6.886636734008789')

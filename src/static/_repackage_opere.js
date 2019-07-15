@@ -60,6 +60,7 @@ const data = OPERE.map((opr) => {
             .replace("Ì","I")
             .replace("Ù","U'")
             .replace("-","")
+            .replace("’","'")
             )
         })
         if(p_comment_en.length!==0) EN['prof'].push({
