@@ -40,10 +40,27 @@ const data = OPERE.map((opr) => {
         const p_comment = comment_about_opere.filter((c)=>c.prof_name==p)
         console.log(`${opr.title_it}\t${p}\tcomment\t${p_comment.length}\t个`)
         if (p_comment.length==0) continue;
+        
         const p_comment_it = p_comment.filter((c)=>c.lan=='it');
         const p_comment_en = p_comment.filter((c)=>c.lan=='en');
         if(p_comment_it.length!==0) IT['prof'].push({
-            'name':p,'comment':p_comment_it.map((o)=>o.comment),'assessorato':prof_detail.assessorato_it,'wix':prof_detail.wix
+            'name':p,
+            'assessorato':prof_detail.assessorato_it,
+            'wix':prof_detail.wix,
+            'comment':p_comment_it.map((o)=>
+            // 意大利语不支持问题 MSDF
+            o.comment.replace("à","a'")
+            .replace("ò","o'")
+            .replace("è","e'")
+            .replace("ì","i")
+            .replace("ù","u'")
+            .replace("À","A'")
+            .replace("Ò","O'")
+            .replace("È","E'")
+            .replace("Ì","I")
+            .replace("Ù","U'")
+            .replace("-","")
+            )
         })
         if(p_comment_en.length!==0) EN['prof'].push({
             'name':p,'comment':p_comment_en.map((o)=>o.comment),'assessorato':prof_detail.assessorato_en,'wix':prof_detail.wix
