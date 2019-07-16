@@ -89,7 +89,7 @@ AFRAME.registerComponent("o_opere",{
 			const prof_item = this.data[`prof_${language}`][i];
 			const $prof = document.createElement('a-entity');
 			$prof.setAttribute('position', `${0.7*i} -1 0.1`);//一字排开
-			$prof.setAttribute(`o_prof`,{value:[prof_item]});
+			$prof.setAttribute(`o_prof`,{value:[prof_item],title:this.data[`title_${this.data.language}`]});
 			$prof.setAttribute('look-at', "[camera]");
 			this.$prof_group.appendChild( $prof );
 			

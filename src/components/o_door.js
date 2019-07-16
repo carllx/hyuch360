@@ -18,8 +18,8 @@ AFRAME.registerComponent("o_door", {
         // Create text  
 		this.el.setAttribute("text",{
             value:this.data.index,
-            width:0.5,
-            zOffset: 0.6,
+            width:0.3,
+            zOffset: 0.1,
             wrapCount:  3,
             align:'center',
         })
@@ -30,6 +30,7 @@ AFRAME.registerComponent("o_door", {
         $loc.setAttribute('src', `#LOC1`);
         $loc.setAttribute('width',0.7);
         $loc.setAttribute('height',0.7);
+        $loc.setAttribute('position','0 -0.1 0');
         $loc.setAttribute('look-at',"[camera]")
         this.el.appendChild( $loc );
 
