@@ -45,7 +45,7 @@ const data = OPERE.map((opr) => {
         const p_comment_en = p_comment.filter((c)=>c.lan=='en');
         if(p_comment_it.length!==0) IT['prof'].push({
             'name':p,
-            'assessorato':prof_detail.assessorato_it,
+            'assessorato':prof_detail.asso_it,
             'wix':prof_detail.wix,
             'comment':p_comment_it.map((o)=>
             // 意大利语不支持问题 MSDF
@@ -64,7 +64,7 @@ const data = OPERE.map((opr) => {
             )
         })
         if(p_comment_en.length!==0) EN['prof'].push({
-            'name':p,'comment':p_comment_en.map((o)=>o.comment),'assessorato':prof_detail.assessorato_en,'wix':prof_detail.wix
+            'name':p,'comment':p_comment_en.map((o)=>o.comment),'assessorato':prof_detail.asso_en,'wix':prof_detail.wix
         })
         
 

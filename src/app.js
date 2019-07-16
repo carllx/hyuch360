@@ -62,16 +62,10 @@ const createLoader = (srcs)=>{
 
 const creatPorta = (index,onRoomId,position)=>{
 	const $porta = document.querySelector("#porta");
-	const port = document.createElement('a-sphere');
+	const port = document.createElement('a-entity');
 	port.setAttribute('o_door',{'index':index,'onRoomId':onRoomId} )
 	port.setAttribute('event-set__click',{'index':index,'onRoomId':onRoomId} )
-	port.setAttribute('radius',"0.4" )
 	port.setAttribute('position',position )
-	port.setAttribute('material',{color: '#131313', shader: 'flat'})
-	port.setAttribute('look-at',"[camera]")
-	port.setAttribute('geometry',{segmentsHeight: 12,segmentsWidth: 9})
-	port.setAttribute('animation',{property: 'rotation', to: '0 360 0', loop: true, dur: 7000,easing:'linear'})
-	
 	$porta.appendChild( port );
 
 }

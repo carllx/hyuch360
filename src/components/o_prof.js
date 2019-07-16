@@ -28,21 +28,20 @@ AFRAME.registerComponent("o_prof", {
         $EL.setAttribute('look-at', "[camera]");
         let position = new THREE.Vector3(0, 0, 0);
         position = position.copy($EL.object3D.position)
+        // BUG: 不能使用 this.position
         // this.position = $EL.object3D.position
         // position.copy( $EL.object3D.position );
-        // debugger
-        
         // const position = this.position.copy( $EL.object3D.position );
         // const position = $EL.object3D.position;
-        // EL area professore
+
+        
+
+        // AERA  professore
+        // ===============
+        const AERA_professore_w = 0.7
         const $area_prof = document.createElement('a-entity');
-        // $area_prof.setAttribute('position', `0 2 0`);
         $EL.appendChild( $area_prof );
-        // EL  name
-        const $name= document.createElement('a-entity');
-        $name.setAttribute('text',{value:element['name'],align:'center',width:1.5});
-        $name.setAttribute('position', `0 -0.3 0`);
-        $area_prof.appendChild( $name );
+        
         //EL avatar  
         const $avatar = document.createElement('a-image');
         $avatar.setAttribute('src', `#${element['name'].replace(' ','').replace("’",'')}`);
@@ -50,23 +49,38 @@ AFRAME.registerComponent("o_prof", {
         $avatar.setAttribute('height',0.4);
         $avatar.setAttribute('raycastable','')
         $avatar.addEventListener('click',(evt)=>{
-            // debugger
             $EL.emit('open',{onProf:evt.detail.intersection.object.geometry.uuid,distance:evt.detail.intersection.distance})
-            
-            // EL $close
             $close.setAttribute('raycastable','')
             // $avatar[$area_comment.childNodes.length-1].setAttribute('raycastable','')
         },false)
         $area_prof.appendChild( $avatar );
+        // EL  name
+        const $name= document.createElement('a-entity');
+        $name.setAttribute('text',{value:element['name'],width:AERA_professore_w,wrapCount:15,xOffset:0.18});
+        $name.setAttribute('position', `0 -0.3 0`);
+        $area_prof.appendChild( $name );
+        // assessorato
+        const $assor = document.createElement('a-entity');
+        $assor.setAttribute('text',{font:'sourcecodepro',value:`${element['assessorato']}`,width:AERA_professore_w,wrapCount:25,xOffset:0.18});
+        $assor.setAttribute('position','0 -0.4 0');
+        $area_prof.appendChild( $assor );
+        // ReadMore
+        const $btn = document.createElement('a-plane');
+        $btn.setAttribute('height',0.1);
+        $btn.setAttribute('width',0.3);
+        $btn.setAttribute('color','#05000b');
+        $btn.setAttribute('text',{value:`Read More`,width:1,wrapCout:9,align:'center',});
+        $btn.setAttribute('position','0 -0.6 0');
+        $area_prof.appendChild( $btn );
 
-
-        // EL area_comment
+        // AERA _comment
+        // ===============
         const $area_comment = document.createElement('a-entity');
-        $area_comment.setAttribute('visible', false);
-        // $area_comment.setAttribute('position', `0 0 0`);
+        // $area_comment.setAttribute('visible', false);
+        $area_comment.setAttribute('visible', true);//debug
         $EL.appendChild( $area_comment );
-
         //EL $comments
+        let c_width=0// layout
         for (let i = 0; i < element['comment'].length; i++) {
 
             const $pane = document.createElement('a-entity');
@@ -74,33 +88,30 @@ AFRAME.registerComponent("o_prof", {
             $area_comment.appendChild($pane )
             // $pane.setAttribute('text',{font:'sourcecodepro',value:`${element['comment'][i]}..`,opacity:0,transparent: true});
             $pane.setAttribute('look-at', "[camera]");
-            $pane.setAttribute('text',{value:`${element['comment'][i]}`,opacity:0,transparent: true,wrapCount:30});
+            // $pane.setAttribute('text',{value:`${element['comment'][i]}`,opacity:0,transparent: true,wrapCount:30});
+            $pane.setAttribute('text',{value:`${element['comment'][i]}`,opacity:1,transparent: true,wrapCount:30});//debug
             //get text height&width
             $pane.setAttribute('geometry',{primitive: 'plane', height: 1.2, width: 2});
             $pane.setAttribute('material',{shader: 'flat',color:'#565182',opacity:0,transparent: true});
-            const $product = document.createElement('a-entity');
-            $product.setAttribute('text',{font:'sourcecodepro',value:`---<IL REGNO DELLA PUREZZA>`});
+            c_width+=$pane.components.geometry.attrValue.width;
+            
         }
-
-
-        // EL close
+            // const h = el.components.geometry.attrValue.height
+            // const w = el.components.geometry.attrValue.width
+            // console.log(`h:${h}\nw:${w}`)
+        // AERA close
+        // ===============
         const  $close = document.createElement('a-entity');
         $close.setAttribute('text',{value:'X',align:'center',color:'#ffffff',width:0.1,wrapCount:1.38});
         $close.setAttribute('position', `0 -0.5 0`);
         $close.setAttribute('geometry', {primitive: 'circle', radius: 0.1});
         $close.setAttribute('material', {shader: 'flat', color: '#1f1f1f',opacity:0,transparent: true});
         $close.setAttribute('raycastable','')
-        $area_comment.appendChild( $close )
+        this.el.appendChild( $close )
         
         $close.addEventListener("click", (evt)=> {
-
-            
             evt.target.removeAttribute('raycastable','')
             $EL.emit('close','')
-            // const h = el.components.geometry.attrValue.height
-            // const w = el.components.geometry.attrValue.width
-            // console.log(`h:${h}\nw:${w}`)
-            
         },false)
         
         
@@ -121,8 +132,8 @@ AFRAME.registerComponent("o_prof", {
             // Animation
             let tl = AFRAME.ANIME.timeline({
                 easing: 'easeOutExpo',
-                // delay: function(el, i) { return i * 100; },
                 duration: 250
+                // delay: function(el, i) { return i * 100; },
             });
             tl.add({targets: document.querySelector('a-sky').components.material.material.color,r: 0.5, g: 0.5, b: 0.5,duration: 1000})
             .add({targets: $EL.object3D.position,x: 0,y: 0,z: distance-3},'-=600')

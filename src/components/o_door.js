@@ -7,14 +7,13 @@ AFRAME.registerComponent("o_door", {
         onRoomId:{type:'int'},
     },
     init:function(){
-        this.markerELs= this.el.sceneEl.querySelectorAll('[o_opere]')
+        this.opereELs= this.el.sceneEl.querySelectorAll('[o_opere]')
         // this.filterEls= this.el.sceneEl.querySelectorAll('[room_filter]')
         this.doorELs= this.el.sceneEl.querySelectorAll('[o_door]')
         this.sky = this.el.sceneEl.querySelector('#background');
         this.cam = this.el.sceneEl.querySelector('#cam');
         const sky = this.sky
         const cam = this.cam
-        // const this = this;
 
         // Create text  
 		this.el.setAttribute("text",{
@@ -23,9 +22,27 @@ AFRAME.registerComponent("o_door", {
             zOffset: 0.6,
             wrapCount:  3,
             align:'center',
-            
         })
-        
+        this.el.setAttribute('look-at',"[camera]")
+
+        // create Loc icon
+        const $loc = document.createElement('a-image');
+        $loc.setAttribute('src', `#LOC1`);
+        $loc.setAttribute('width',0.7);
+        $loc.setAttribute('height',0.7);
+        $loc.setAttribute('look-at',"[camera]")
+        this.el.appendChild( $loc );
+
+        //create arrow
+        const $arrow = document.createElement('a-curvedimage');
+        $arrow.setAttribute('src', `#LOC2`);
+        $arrow.setAttribute('radius',0.2);
+        $arrow.setAttribute('height',0.3);
+        $arrow.setAttribute('position',"0 -0.2 0");
+        $arrow.setAttribute('theta-length',270);
+        $arrow.setAttribute('rotation',"0 0 0");
+        $arrow.setAttribute('animation',{property: 'rotation', to: '0 -360 0', loop: true, dur: 1500,easing:'linear'})
+        this.el.appendChild( $arrow );
 
         // 隐藏听命
 		if(this.data.onRoomId === 1){
@@ -63,8 +80,8 @@ AFRAME.registerComponent("o_door", {
 
             
             // for (let i = 0; i < this.filterEls.length; i++) {
-            for (let i = 0; i < this.markerELs.length; i++) {
-                const el = this.markerELs[i];
+            for (let i = 0; i < this.opereELs.length; i++) {
+                const el = this.opereELs[i];
                 el.emit('onRoom',{id:this.data.index},false)
             }
 

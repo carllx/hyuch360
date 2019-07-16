@@ -6,9 +6,9 @@ AFRAME.registerComponent("o_lang", {
         
         this.el.setAttribute("text",{
             value:this.data.text.toUpperCase(),
-            width:0.5,
+            width:0.6,
             zOffset: 0.6,
-            wrapCount:  3,
+            wrapCount: 10,
             align:'center',
         })
         
