@@ -13,7 +13,7 @@
 
 <body>
     <a-scene id="scene" vr-mode-ui="enabled: false">
-        <a-assets preload="auto">
+        <a-assets preload="auto" >
             <!-- Room -->
             <!-- <img id="room1" crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_17f6e6be9bf04bacb9c9d8a485674c4a~mv2_d_4096_2048_s_2.jpg/v1/fit/w_2048,h_2048/1f2952_17f6e6be9bf04bacb9c9d8a485674c4a~mv2_d_4096_2048_s_2.jpg"> -->
             <!-- <img id="room2" crossorigin="anonymous" src="https://static.wixstatic.com/media/1f2952_ec85ddc56bfb4486a8b7562e3b3a2d41~mv2_d_4096_2048_s_2.jpg/v1/fit/w_2048,h_2048/1f2952_ec85ddc56bfb4486a8b7562e3b3a2d41~mv2_d_4096_2048_s_2.jpg"> -->
@@ -45,16 +45,19 @@
             <img preloader="true" id="LOC2" crossorigin="anonymous"
             src="https://static.wixstatic.com/media/e4ae07_62f495b2dca04b9d8e2ec225e2a60917~mv2.png/v1/fit/w_64,h_64/e4ae07_62f495b2dca04b9d8e2ec225e2a60917~mv2.png">
             <!-- book -->
-            <a-asset-item id="book" src="https://rawcdn.githack.com/carllx/hyuch360/f5115765d5541d5d804ebb27b0e883af2c74bc9e/src/static/book.glb?raw=true"></a-asset-item>
+            <a-asset-item preloader="true" id="book" src="https://rawcdn.githack.com/carllx/hyuch360/f5115765d5541d5d804ebb27b0e883af2c74bc9e/src/static/book.glb"></a-asset-item>
             <img preloader="true" id="book_diff" crossorigin="anonymous"
             src="https://static.wixstatic.com/media/e4ae07_85801be724634657a1e58a58e01aed44~mv2_d_4096_4096_s_4_2.png/v1/fit/w_1024,h_1024/e4ae07_85801be724634657a1e58a58e01aed44~mv2_d_4096_4096_s_4_2.png">
             
         </a-assets>
 
         <a-sky id="background" src="#room1" rotation="0 -90 0"></a-sky>
-        <a-gltf-model src="#book" position="5 -1 0.4"></a-gltf-model>
+        <!-- book -->
+        
+        <a-entity id="book" book></a-entity>
+        <!-- camera -->
         <a-entity id="cam" camera position="4.895750045776367 -1.2412012815475464 0.3603135347366333" look-controls>
-            
+
             <!-- cursor -->
             <!-- <a-entity 
             raycaster="objects: [raycastable]" 
@@ -90,6 +93,8 @@
                 look-at="[camera]" geometry="segmentsHeight: 12; segmentsWidth: 9" o_lang="text:ENGLISH">
             </a-sphere>
         </a-entity>
+
+        
     </a-scene>
 
 

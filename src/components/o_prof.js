@@ -49,7 +49,7 @@ AFRAME.registerComponent("o_prof", {
         $avatar.setAttribute('height',0.4);
         $avatar.setAttribute('raycastable','')
         $avatar.addEventListener('click',(evt)=>{
-            debugger
+            // debugger
             // {x: 3.4144309980615613, y: -1.9646872544480698, z: -3.8009913404031086}
             $EL.emit('open',{onProf:evt.detail.intersection.object.geometry.uuid,distance:evt.detail.intersection.distance})
             $close.setAttribute('raycastable','')

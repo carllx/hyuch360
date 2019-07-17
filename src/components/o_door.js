@@ -90,7 +90,7 @@ AFRAME.registerComponent("o_door", {
                 const el = this.doorELs[i];
                 el.emit('onRoom',{id:this.data.index},false)
             }
-
+            
 
             
             // debugger
