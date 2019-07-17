@@ -36,12 +36,6 @@ AFRAME.registerSystem('preloader', {
      * Called once when component is attached. Generally for initial setup.
      */
     init: function () {
-
-        // const cameraEl = document.querySelector('#cam');
-        // this.cameraPosition = new THREE.Vector3();
-        // cameraEl.getObject3D('camera')
-        // cameraEl.object3D.getWorldPosition(this.cameraPosition)
-        // debugger
         
         this.cameraPosition = document.querySelector('#cam').getAttribute('position').split(' ');
         // debugger
@@ -50,18 +44,19 @@ AFRAME.registerSystem('preloader', {
         this.$loaderEl.setAttribute('position',`${this.cameraPosition[0]} ${this.cameraPosition[1]} ${this.cameraPosition[2]-0.4}`);
         // this.$loaderEl.setAttribute('animation',{property:'scale',to:'5 5 5',dur:1000,easing:'easeOutQuart',startEvents:'onComplete'})
         this.$loaderEl.setAttribute('animation__fade',{property:'text.opacity',to:0,dur:1000,easing:'easeOutQuart',startEvents:'onComplete'})
-        this.$loaderEl.addEventListener('animationcomplete',   ()=> {
-            
-            this.$loaderEl.remove();
+        this.$loaderEl.addEventListener('animationcomplete',   (evt)=> {
+            // debugger
+            evt.target.remove();//Cannot read property 'removeChild' of null
+            // evt.currentTarget.remove();//Cannot read property 'removeChild' of null
+            // this.$loaderEl.remove();//Cannot read property 'removeChild' of null
+            // evt.target.parentNode.removeChild(evt.target);
         });
         this.el.sceneEl.appendChild(this.$loaderEl)
 
 
 
         document.querySelector('a-assets').addEventListener('loaded',function(){
-
             if(this.data.debug){console.info('All assets loaded')}
-            this.triggerProgressComplete();
         }.bind(this));
 
         const assetItems = document.querySelectorAll('a-assets a-asset-item,a-assets img,a-assets audio,a-assets video');
@@ -122,7 +117,7 @@ AFRAME.registerSystem('preloader', {
     
     triggerProgressComplete: function(){
         // setAtribute 
-        this.$loaderEl.emit('onComplete')
+        this.$loaderEl.emit('animationcomplete')
         // this.$loaderEl.remove();
     },
 

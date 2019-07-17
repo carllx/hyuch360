@@ -10,6 +10,7 @@ require('./components/o_opere.js');
 require('./components/o_lang.js');
 require('./components/o_door.js');
 require('./components/preloader.js');
+require('./components/book.js');
 
 // require('./components/o_boardo.js');
 
