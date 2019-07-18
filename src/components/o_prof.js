@@ -39,8 +39,9 @@ AFRAME.registerComponent("o_prof", {
         // ===============
         const AERA_professore_w = 0.7
         const $area_prof = document.createElement('a-entity');
+        $area_prof.setAttribute('look-at', "[camera]");
+
         $EL.appendChild( $area_prof );
-        $EL.setAttribute('look-at', "[camera]");
         
         //EL avatar  
         const $avatar = document.createElement('a-image');
@@ -74,7 +75,7 @@ AFRAME.registerComponent("o_prof", {
         $btn.setAttribute('material',{opacity:0,transparent: true});
         $btn.setAttribute('text',{value:`Read More`,width:0.4,wrapCount:9,align:'center',opacity:0,transparent: true});
         $btn.setAttribute('position','0 -0.7 0');
-        $area_prof.setAttribute('look-at', "[camera]");
+        $btn.addEventListener('click',this.openBook)
         $area_prof.appendChild( $btn );
 
         // AERA _comment
@@ -203,6 +204,9 @@ AFRAME.registerComponent("o_prof", {
         $EL.addEventListener("close", animeClose)
 
         
+        },
+        openBook:function(evt){
+            dubugger
         }
     // update:function(oldData){
     //     if(oldData!==this.data) {debugger}
