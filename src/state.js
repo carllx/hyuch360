@@ -6,6 +6,8 @@ AFRAME.registerState({
     onProf: ``,
     language: 'it',
     room: 1,
+    raycastable_els:[]
+    // scenceEls:
   },
 
   handlers: {
@@ -33,6 +35,24 @@ AFRAME.registerState({
       }
 
     },
+    zipRay:function(state, action){
+      // store ELs Raycastable > raycastable_els
+      console.log('zipRay...')
+      state.raycastable_els = document.querySelector('a-scene').querySelectorAll('[raycastable]')
+      // loop ELs remove Attribuite [Raycastable]
+      for (var i of state.raycastable_els) {
+        i.removeAttribute('raycastable','') 
+      }
+    },
+    unzipRay:function(state, action){
+      // loop ELs raycastable_els > setAttribute raycastable
+      console.log('unzipRay...')
+      for (var i of state.raycastable_els) {
+        i.setAttribute('raycastable','') 
+      }
+      //cleanup raycastable_els
+      state.raycastable_els = []
+    }
   },
 
 

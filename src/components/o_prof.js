@@ -75,7 +75,8 @@ AFRAME.registerComponent("o_prof", {
         $btn.setAttribute('material',{opacity:0,transparent: true});
         $btn.setAttribute('text',{value:`Read More`,width:0.4,wrapCount:9,align:'center',opacity:0,transparent: true});
         $btn.setAttribute('position','0 -0.7 0');
-        $btn.addEventListener('click',this.openBook)
+        $btn.setAttribute('raycastable','');
+        $btn.addEventListener('click',this.openBook.bind(this))
         $area_prof.appendChild( $btn );
 
         // AERA _comment
@@ -206,7 +207,10 @@ AFRAME.registerComponent("o_prof", {
         
         },
         openBook:function(evt){
-            dubugger
+            const $book = this.el.sceneEl.querySelector('#book');
+            if(AFRAME.scenes[0])  AFRAME.scenes[0].emit('zipRay',{})
+            $book.setAttribute('book','')
+            // debugger
         }
     // update:function(oldData){
     //     if(oldData!==this.data) {debugger}

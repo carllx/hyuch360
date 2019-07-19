@@ -21,12 +21,14 @@ AFRAME.registerComponent("book", {
     },
     init:function(){
         
+        this.clickableEls = this.el.sceneEl.querySelectorAll('[raycastable]')
+        // debugger
         this.el.setAttribute('position','5 -1.2 -0.2')
         //EL book modle
         this.$book = document.createElement('a-gltf-model');
-        this.$book.setAttribute('rotation',"0 -25 0");
+        // this.$book.setAttribute('rotation',"0 -25 0");
         this.$book.setAttribute('position','-0.4 0 -0.3')
-        this.$book.setAttribute('src','#book')
+        this.$book.setAttribute('src','#book_gltf')
         this.el.appendChild(this.$book);
         this.el.addEventListener("activeBook", open,false)
         //EL prof avatar
@@ -122,7 +124,7 @@ AFRAME.registerComponent("book", {
         $close.setAttribute('look-at', "[camera]");
         this.el.appendChild( $close )
         
-        $close.addEventListener("click", this.closeBook,false)
+        $close.addEventListener("click", this.closeBook.bind(this),false)
 
         // this.el.addEventListener('openBook',this.onOpen,false);
         this.onOpen()
@@ -138,14 +140,15 @@ AFRAME.registerComponent("book", {
             duration: 1000,
             // delay:10000,
         });
-        tl.add({targets:this.$book.object3D.position,z:-1});
-        tl.add({targets:this.$book.object3D.position,z:0});
+        tl
+        .add({targets:this.$book.object3D.position,z:-1})
+        .add({targets:this.$book.object3D.position,z:0.01,duration:1000})
+        .add({targets:this.$book.object3D.rotation,y:25},'-=1000')
     },
     onOpen: function(){
         console.log('open Book')
         // animation 'open'
         // debugger
-        // console.log( ` this.o_animation:${this.o_animation}`)
         this.o_animation();
         // 将其他 remove 其他的raycastable evt.target.removeAttribute('raycastable','')
     },
@@ -153,8 +156,19 @@ AFRAME.registerComponent("book", {
     closeBook: function(evt){
         // debugger
         console.log('close Book')
-        console.log( ` this.o_animation:${this.o_animation}`)
-        this.o_animation();
+        AFRAME.scenes[0].emit('unzipRay',{})
+        // debugger
+        // this.el.removeChild();
+        while (this.el.firstChild) {
+            this.el.removeChild(this.el.firstChild);
+        }
+        // this.el.setAttribute('raycastable','')
+        // this.el.removeAttribute('book');
+        // debugger
+        // this.clickableEls = this.el.sceneEl.querySelectorAll('[raycastable]')
+        // console.log('close Book')
+        // console.log( ` this.o_animation:${this.o_animation}`)
+        // this.o_animation();
         // animation 'close'
 
         // re-active els? raycastable
@@ -162,9 +176,6 @@ AFRAME.registerComponent("book", {
         // remove this.el attribui bool
        
     },
-
-    
-
     c_animation:function(){
 
     },
