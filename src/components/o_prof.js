@@ -15,6 +15,7 @@
 
 AFRAME.registerComponent("o_prof", {
     schema: {
+        camera_id: {type:"int"},
         value:{type:'array'},
         title:{type:'string'}
     },
@@ -24,22 +25,32 @@ AFRAME.registerComponent("o_prof", {
     // init:function(){},
     init: function (){
         // debugger
+        console.log(`roooom:${this.data.camera_id}`)
+        
         const element = this.data.value[0];
         const $EL = this.el
+        
         $EL.setAttribute('look-at', "[camera]");
+        // 储存原始坐标
         let position = new THREE.Vector3(0, 0, 0);
         position = position.copy($EL.object3D.position)
         // BUG: 不能使用 this.position
-        // this.position = $EL.object3D.position
-        // position.copy( $EL.object3D.position );
-        // const position = this.position.copy( $EL.object3D.position );
-        // const position = $EL.object3D.position;
+        
+        //  BG
+        // ===============
+        const $BG = document.createElement('a-box');
+        $BG.setAttribute('color',"tomato");
+        $BG.setAttribute('depth',"0.005");
+        $BG.setAttribute('height',"2");
+        $BG.setAttribute('width',"0.005");
+        $EL.appendChild( $BG );
+
 
         // AERA  professore
         // ===============
         const AERA_professore_w = 0.7
         const $area_prof = document.createElement('a-entity');
-        $area_prof.setAttribute('look-at', "[camera]");
+        // $area_prof.setAttribute('look-at', "[camera]");
 
         $EL.appendChild( $area_prof );
         
@@ -48,13 +59,13 @@ AFRAME.registerComponent("o_prof", {
         $avatar.setAttribute('src', `#${element['name'].replace(' ','').replace("’",'')}`);
         $avatar.setAttribute('width',0.4);
         $avatar.setAttribute('height',0.4);
-        $avatar.setAttribute('raycastable','')
+        $avatar.setAttribute('bind-toggle__raycastable',`room_at === ${this.data.camera_id}`);
+        // $avatar.setAttribute('raycastable','')
+        // debugger
         $avatar.addEventListener('click',(evt)=>{
             // debugger
-            // {x: 3.4144309980615613, y: -1.9646872544480698, z: -3.8009913404031086}
             $EL.emit('open',{onProf:evt.detail.intersection.object.geometry.uuid,distance:evt.detail.intersection.distance})
             $close.setAttribute('raycastable','')
-            // $avatar[$area_comment.childNodes.length-1].setAttribute('raycastable','')
         },false)
         $area_prof.appendChild( $avatar );
         // EL  name
@@ -64,7 +75,7 @@ AFRAME.registerComponent("o_prof", {
         $area_prof.appendChild( $name );
         // assessorato
         const $assor = document.createElement('a-entity');
-        $assor.setAttribute('text',{font:'sourcecodepro',value:`${element['assessorato']}`,baseline:'top',width:AERA_professore_w,wrapCount:20,xOffset:0.18,opacity:0,transparent: true});
+        $assor.setAttribute('text',{font:'sourcecodepro',value:`${element['assessorato']}`,baseline:'top',width:AERA_professore_w,wrapCount:20,xOffset:0.18,opacity:1,transparent: true});
         $assor.setAttribute('position','0 -0.37 0');
         $area_prof.appendChild( $assor );
         // ReadMore
@@ -75,7 +86,6 @@ AFRAME.registerComponent("o_prof", {
         $btn.setAttribute('material',{opacity:0,transparent: true});
         $btn.setAttribute('text',{value:`Read More`,width:0.4,wrapCount:9,align:'center',opacity:0,transparent: true});
         $btn.setAttribute('position','0 -0.7 0');
-        $btn.setAttribute('raycastable','');
         $btn.addEventListener('click',this.openBook.bind(this))
         $area_prof.appendChild( $btn );
 
@@ -102,7 +112,7 @@ AFRAME.registerComponent("o_prof", {
             $pane.setAttribute('position', `${2.1*i} 0 0`);
             $area_comment.appendChild($pane )
             // $pane.setAttribute('text',{font:'sourcecodepro',value:`${element['comment'][i]}..`,opacity:0,transparent: true});
-            $pane.setAttribute('look-at', "[camera]");
+            // $pane.setAttribute('look-at', "[camera]");
             $pane.setAttribute('text',{value:`${element['comment'][i]}`,opacity:0,transparent: true,wrapCount:40,baseline:'top'});
             //get text height&width
             $pane.setAttribute('geometry',{primitive: 'plane', height: 1.2, width: c_width});
@@ -119,7 +129,7 @@ AFRAME.registerComponent("o_prof", {
         $close.setAttribute('text',{value:'x',align:'center',color:'#ffffff',width:0.1,wrapCount:1.38,opacity:0,transparent: true});
         $close.setAttribute('geometry', {primitive: 'circle', radius: 0.1});
         $close.setAttribute('material', {shader: 'flat', color: '#1f1f1f',opacity:0,transparent: true});
-        $close.setAttribute('look-at', "[camera]");
+        // $close.setAttribute('look-at', "[camera]");
         this.el.appendChild( $close )
         
         $close.addEventListener("click", (evt)=> {
@@ -133,8 +143,24 @@ AFRAME.registerComponent("o_prof", {
         $EL.addEventListener("open", (evt)=> {
             // debugger
             console.log('open');
-            const distance = evt.detail.distance
+            // const distance = evt.detail.distance
+            const $test = AFRAME.scenes[0].querySelector('#test');
+            const $cam = AFRAME.scenes[0].querySelector('#cam');
+            // debugge
+            let p = new THREE.Vector3( 0, 0, -2 );
+            p.applyQuaternion( $cam.object3D.quaternion );
+            console.log(p)
+            p.add( $cam.object3D.position );     
+            console.log(p)
+            $EL.object3D.worldToLocal(p)
+            console.log(p)
+            // $test.object3D.position.copy(p)
+            // $book.object3D.position.copy(p)
             // 已经打开的 prof 关闭
+            // console.log(p)
+           
+            
+
             if (document.querySelector('#opened')) document.querySelector('#opened').emit('close')
             AFRAME.scenes[0].emit('activeProf', {onProf:$EL.object3D.uuid})
             // Animation
@@ -147,13 +173,15 @@ AFRAME.registerComponent("o_prof", {
                     $area_comment.setAttribute('id', 'opened');
                 },complete:function(){
                     $close.setAttribute('raycastable','')
+                    $btn.setAttribute('raycastable','');
+                    console.log($EL.object3D.position)
                 }
             },'-=100');
             tl
             .add({targets: document.querySelector('a-sky').components.material.material.color,r: 0.5, g: 0.5, b: 0.5,duration: 1000})
-            .add({targets: $EL.object3D.position,x: 0,y: 0,z: distance-2.5},'-=900')
+            .add({targets: $EL.object3D.position,...p},'-=900')
             .add({targets: $area_prof.object3D.position,x: -(c_width-0.4),y: 0.15,z: 0},'-=900')
-            .add({targets: $assor.components.text.shaderObject.uniforms.opacity,value:1})
+            // .add({targets: $assor.components.text.shaderObject.uniforms.opacity,value:1})
             .add({targets: $title.components.text.shaderObject.uniforms.opacity,value:1})
             $area_comment.querySelectorAll('[text]').forEach(item => {
                 tl.add({targets: item.components.text.shaderObject.uniforms.opacity, value:1});
@@ -165,6 +193,7 @@ AFRAME.registerComponent("o_prof", {
             .add({targets: $close.components.text.shaderObject.uniforms.opacity,value:1},'-=250')
             .add({targets: $close.components.material.material,opacity:1})
         });
+
         // Debug Layout
         // $area_prof.setAttribute('position', `-${c_width-0.4} 0.25 0`);
         // $assor.setAttribute('text',{opacity:1});
@@ -188,10 +217,10 @@ AFRAME.registerComponent("o_prof", {
                 // delay: function(el, i) { return i * 100; },
                 duration: 150,
                 complete:function(){
-                    console.log(this.position)
                     $area_comment.setAttribute('visible', false);
                     $area_comment.removeAttribute('id', 'opened');
                     $close.removeAttribute('raycastable','')
+                    $btn.removeAttribute('raycastable','')
                 }
             })
             $area_comment.querySelectorAll('[text]').forEach(item => {
@@ -200,16 +229,36 @@ AFRAME.registerComponent("o_prof", {
             tl
             .add({targets: document.querySelector('a-sky').components.material.material.color,r: 1, g: 1, b: 1})
             .add({targets: $EL.object3D.position,...position})
-            .add({targets: $area_prof.object3D.position,x: 0,y: 0,z: 0,duration: 700},'-=150');
+            .add({targets: $area_prof.object3D.position,x: 0,y: 0,z: 0,duration: 700},'-=150')
+            .add({targets: $close.object3D.position,x: 0,y: 0,z: 0},'-=140')
+            .add({targets: $close.components.text.shaderObject.uniforms.opacity,value:0},'-=140')
+            .add({targets: $close.components.material.material,opacity:0},'-=300')
+            .add({targets: $btn.components.text.shaderObject.uniforms.opacity,value:0},'-=20')
+            .add({targets: $btn.components.material.material,opacity:0},'-=20')
         }
         $EL.addEventListener("close", animeClose)
+        $EL.object3D.updateMatrixWorld()
 
         
         },
         openBook:function(evt){
+            
             const $book = this.el.sceneEl.querySelector('#book');
-            if(AFRAME.scenes[0])  AFRAME.scenes[0].emit('zipRay',{})
+            const $test = this.el.sceneEl.querySelector('#test');
+            const $cam = this.el.sceneEl.querySelector('#cam');
+            
+            if(AFRAME.scenes[0])  {
+                const $scene =  AFRAME.scenes[0]
+                $scene.emit('zipRay',{})
+                
+                
+            }
+            
             $book.setAttribute('book','')
+            const p = new THREE.Vector3( 0, 0, -0.5 );
+            p.applyQuaternion( $cam.object3D.quaternion );
+            p.add( $cam.object3D.position );
+            $book.object3D.position.copy(p)
             // debugger
         }
     // update:function(oldData){

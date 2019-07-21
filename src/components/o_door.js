@@ -14,6 +14,10 @@ AFRAME.registerComponent("o_door", {
         this.cam = this.el.sceneEl.querySelector('#cam');
         const sky = this.sky
         const cam = this.cam
+        
+        
+        this.el.setAttribute('look-at',"[camera]")
+        this.el.setAttribute('bind',`visible:room_at === ${this.data.onRoomId}`)
 
         // Create text  
 		this.el.setAttribute("text",{
@@ -23,7 +27,7 @@ AFRAME.registerComponent("o_door", {
             wrapCount:  3,
             align:'center',
         })
-        this.el.setAttribute('look-at',"[camera]")
+        
 
         // create Loc icon
         const $loc = document.createElement('a-image');
@@ -32,6 +36,9 @@ AFRAME.registerComponent("o_door", {
         $loc.setAttribute('height',0.7);
         $loc.setAttribute('position','0 -0.1 0');
         $loc.setAttribute('look-at',"[camera]")
+        $loc.setAttribute('bind-toggle__raycastable',`room_at === ${this.data.onRoomId}`)
+        // $loc.setAttribute('bind__visible',`room_at === ${this.data.onRoomId}`)
+
         this.el.appendChild( $loc );
 
         //create arrow
@@ -42,43 +49,41 @@ AFRAME.registerComponent("o_door", {
         $arrow.setAttribute('position',"0 -0.2 0");
         $arrow.setAttribute('theta-length',270);
         $arrow.setAttribute('rotation',"0 0 0");
+        // $arrow.setAttribute('bind__visible',`room_at === ${this.data.onRoomId}`);
         $arrow.setAttribute('animation',{property: 'rotation', to: '0 -360 0', loop: true, dur: 1500,easing:'linear'})
         this.el.appendChild( $arrow );
 
         // 隐藏听命
-		if(this.data.onRoomId === 1){
-            this.el.setAttribute('visible', true);
-            this.el.setAttribute('raycastable','')
-		}else{
-			this.el.setAttribute('visible', false);
-        }
+		// if(this.data.onRoomId === 1){
+        //     this.el.setAttribute('visible', true);
+        //     this.el.setAttribute('raycastable','')
+		// }else{
+		// 	this.el.setAttribute('visible', false);
+        // }
 
 
-        this.el.addEventListener("onRoom", (evt )=> {
+        // this.el.addEventListener("onRoom", (evt )=> {
                 
-            if(this.data.onRoomId === evt.detail.id){
-                // debugger
-                this.el.setAttribute('visible', true);
-				this.el.setAttribute('raycastable','')
+        //     if(this.data.onRoomId === evt.detail.id){
+        //         // debugger
+        //         this.el.setAttribute('visible', true);
+		// 		this.el.setAttribute('raycastable','')
                 
-            }else{
-                this.el.setAttribute('visible', false);
-				this.el.removeAttribute('raycastable','')
+        //     }else{
+        //         this.el.setAttribute('visible', false);
+		// 		this.el.removeAttribute('raycastable','')
                 
-            }
-        })
+        //     }
+        // })
 
-        this.el.addEventListener('click',(evt)=>{
+        $loc.addEventListener('click',(evt)=>{
             const cam_data = rooms.filter(i=>(i.cam_index===this.data.index))
             // debugger
             const cam_loc = cam_data[0]['cam_loc'].split(',')
-            console.log(`on Room ${this.data.index}`)
-            console.log(`cam_loc`)
             
             sky.setAttribute('src', `#room${this.data.index}`)
-            // cam.object3D.position = {x :cam_loc[0],y :cam_loc[1],z :cam_loc[2]}
             cam.setAttribute('position', {x :cam_loc[0],y :cam_loc[1],z :cam_loc[2]})
-
+            AFRAME.scenes[0].emit('changeRoom', {room_at:this.data.index})
             
             // for (let i = 0; i < this.filterEls.length; i++) {
             for (let i = 0; i < this.opereELs.length; i++) {
@@ -86,10 +91,10 @@ AFRAME.registerComponent("o_door", {
                 el.emit('onRoom',{id:this.data.index},false)
             }
 
-            for (let i = 0; i < this.doorELs.length; i++) {
-                const el = this.doorELs[i];
-                el.emit('onRoom',{id:this.data.index},false)
-            }
+            // for (let i = 0; i < this.doorELs.length; i++) {
+            //     const el = this.doorELs[i];
+            //     el.emit('onRoom',{id:this.data.index},false)
+            // }
             
 
             

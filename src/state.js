@@ -3,11 +3,10 @@ const OPERE = require('./static/opere_package.js');
 
 AFRAME.registerState({
   initialState: {
-    onProf: ``,
+    onProf: "",
     language: 'it',
-    room: 1,
+    room_at: 1,
     raycastable_els:[]
-    // scenceEls:
   },
 
   handlers: {
@@ -20,7 +19,8 @@ AFRAME.registerState({
       console.log(`state.onProf:${state.onProf}`)
     },
     changeRoom: function (state, action) {
-
+      state.room_at = action.room_at
+      console.log(`room_at:${state.room_at}`)
     },
     changeLanguage: function (state, action) {
       console.log(`activeProf:${state.onProf}`)
@@ -39,6 +39,7 @@ AFRAME.registerState({
       // store ELs Raycastable > raycastable_els
       console.log('zipRay...')
       state.raycastable_els = document.querySelector('a-scene').querySelectorAll('[raycastable]')
+      
       // loop ELs remove Attribuite [Raycastable]
       for (var i of state.raycastable_els) {
         i.removeAttribute('raycastable','') 

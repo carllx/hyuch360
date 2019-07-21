@@ -24,6 +24,7 @@ AFRAME.registerComponent("book", {
         this.clickableEls = this.el.sceneEl.querySelectorAll('[raycastable]')
         // debugger
         this.el.setAttribute('position','5 -1.2 -0.2')
+        this.el.setAttribute('look-at', "[camera]");
         //EL book modle
         this.$book = document.createElement('a-gltf-model');
         // this.$book.setAttribute('rotation',"0 -25 0");
@@ -157,24 +158,10 @@ AFRAME.registerComponent("book", {
         // debugger
         console.log('close Book')
         AFRAME.scenes[0].emit('unzipRay',{})
-        // debugger
-        // this.el.removeChild();
+        this.el.removeAttribute('book');
         while (this.el.firstChild) {
             this.el.removeChild(this.el.firstChild);
         }
-        // this.el.setAttribute('raycastable','')
-        // this.el.removeAttribute('book');
-        // debugger
-        // this.clickableEls = this.el.sceneEl.querySelectorAll('[raycastable]')
-        // console.log('close Book')
-        // console.log( ` this.o_animation:${this.o_animation}`)
-        // this.o_animation();
-        // animation 'close'
-
-        // re-active els? raycastable
-        
-        // remove this.el attribui bool
-       
     },
     c_animation:function(){
 

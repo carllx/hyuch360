@@ -13,8 +13,8 @@ AFRAME.registerComponent("o_lang", {
         })
         
         this.el.addEventListener("click",()=>{
-            
-            AFRAME.scenes[0].emit('changeLanguage', {value:this.data.text},false)
+            const l = this.data.text === 'ENGLISH'?'en':'it'
+            AFRAME.scenes[0].emit('changeLanguage', {value:l },false)
         })
     
     },
