@@ -31,6 +31,10 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),   
         new HtmlWebpackPlugin({
+            files:{
+                ga_header: './src/static/ga_header.html',
+                ga_body:'./src/static/ga_body.html',
+            },
             inject: false,
             hash: true,
             template: './src/index.html',

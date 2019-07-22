@@ -1,20 +1,20 @@
-const profs = [
-    {id:"CRISTINAACIDINI",position:"-0.06195 -0.04782 0"},
-    {id:"DARIONARDELLA",position:"0.09 -0.03105 -0.42"},
-    {id:"FANDIAN",position:"-0.30689 -0.19036 -0.32"},
-    {id:"SHANGHUI",position:"-0.34803 -0.14812 -0.31"},
-    {id:"SHAODAZHEN",position:"0.13405 -0.11574 -0.4"},
-    {id:"TOMMASOSACCHI",position:"-0.00396 -0.18007 -0.31"},
-    {id:"VINCENZOVACCARO",position:"-0.19627 -0.10752 -0.25"},
-]
+// const profs = [
+//     {id:"CRISTINAACIDINI",position:"-0.06195 -0.04782 0"},
+//     {id:"DARIONARDELLA",position:"0.09 -0.03105 -0.42"},
+//     {id:"FANDIAN",position:"-0.30689 -0.19036 -0.32"},
+//     {id:"SHANGHUI",position:"-0.34803 -0.14812 -0.31"},
+//     {id:"SHAODAZHEN",position:"0.13405 -0.11574 -0.4"},
+//     {id:"TOMMASOSACCHI",position:"-0.00396 -0.18007 -0.31"},
+//     {id:"VINCENZOVACCARO",position:"-0.19627 -0.10752 -0.25"},
+// ]
 
-// {id:"CRISTINAACIDINI",x:-0.06195,y:-0.04782,z: 0},
-// {id:"DARIONARDELLA",x:0.05027,y:-0.03105,z: -0.42},
-// {id:"FANDIAN",x:-0.30689,y:-0.19036,z: -0.32},
-// {id:"SHANGHUI",x:-0.34803,y:-0.14812,z: -0.31},
-// {id:"SHAODAZHEN",x:0.13405,y:-0.11574,z: -0.4},
-// {id:"TOMMASOSACCHI",x:-0.00396,y:-0.18007,z: -0.31},
-// {id:"VINCENZOVACCARO",x:-0.19627,y:-0.10752,z: -0.25},
+const profs = [{id:"CRISTINAACIDINI",position:{x:-0.06195,y:-0.04782,z: 0}},
+{id:"DARIONARDELLA",position:{x:0.05027,y:-0.03105,z: -0.42}},
+{id:"FANDIAN",position:{x:-0.30689,y:-0.19036,z: -0.32}},
+{id:"SHANGHUI",position:{x:-0.34803,y:-0.14812,z: -0.31}},
+{id:"SHAODAZHEN",position:{x:0.13405,y:-0.11574,z: -0.4}},
+{id:"TOMMASOSACCHI",position:{x:-0.00396,y:-0.18007,z: -0.31}},
+{id:"VINCENZOVACCARO",position:{x:-0.19627,y:-0.10752,z: -0.25}}]
 AFRAME.registerComponent("book", {
     schema: {
         
@@ -23,7 +23,7 @@ AFRAME.registerComponent("book", {
         
         this.clickableEls = this.el.sceneEl.querySelectorAll('[raycastable]')
         // debugger
-        this.el.setAttribute('position','5 -1.2 -0.2')
+        // this.el.setAttribute('position','5 -1.2 -0.2')
         this.el.setAttribute('look-at', "[camera]");
         //EL book modle
         this.$book = document.createElement('a-gltf-model');
@@ -33,19 +33,19 @@ AFRAME.registerComponent("book", {
         this.el.appendChild(this.$book);
         this.el.addEventListener("activeBook", open,false)
         //EL prof avatar
-        const $prof_group = document.createElement('a-entity');
-        this.el.appendChild($prof_group);
+        this.$prof_group = document.createElement('a-entity');
+        this.el.appendChild(this.$prof_group);
         for (let i = 0; i < profs.length; i++) {
             const p = profs[i];
             const $avatar = document.createElement('a-image');
             $avatar.setAttribute('src', `#${p.id}`);
-            $avatar.setAttribute('position', p.position);
+            $avatar.setAttribute('position', '-10 0 0');
             $avatar.setAttribute('material', {alphaTest:0.5});
             $avatar.setAttribute('width',0.1);
             $avatar.setAttribute('height',0.1);
             $avatar.setAttribute('raycastable','')
-            $avatar.setAttribute('profbook','')
-            $prof_group.appendChild( $avatar );
+            $avatar.setAttribute('prof','')
+            this.$prof_group.appendChild( $avatar );
             
             // this.randomValues($avatar.object3D.position)
         }
@@ -94,7 +94,7 @@ AFRAME.registerComponent("book", {
 
         //Detagli
         const $Detail_group= document.createElement('a-entity');
-        $Detail_group.setAttribute('position', `0 0.13 0`);
+        $Detail_group.setAttribute('position', `0 0.02 0`);
         this.el.appendChild( $Detail_group );
         const $Detail_L= document.createElement('a-entity');
         $Detail_L.setAttribute('text',{value:"PESO\nDIMENSIONI\nPAGINE\nLINGUA\nISBN",opacity:1,transparent: true,width:0.12,wrapCount:17,align:'left'});
@@ -111,21 +111,21 @@ AFRAME.registerComponent("book", {
         $sky.setAttribute('geometry', {radius: 1.12, segmentsHeight: 3, segmentsWidth: 6});
         $sky.setAttribute('position', `0 0 -0.3`);
         $sky.setAttribute('color', `#030004`);
-        $sky.setAttribute('radius', 1.9);
+        // $sky.setAttribute('radius', 1.9);
         this.el.appendChild( $sky );
 
         // create close
         const CloseSize= 0.02
-        const  $close = document.createElement('a-entity');
-        $close.setAttribute('position','0.22 0 0');
-        $close.setAttribute('text',{value:'x',align:'center',color:'#1f1f1f',width:CloseSize,wrapCount:1.38,opacity:1,transparent: true});
-        $close.setAttribute('geometry', {primitive: 'circle', radius: CloseSize});
-        $close.setAttribute('raycastable', '');
-        $close.setAttribute('material', {shader: 'flat', color: '#ffffff',opacity:1,transparent: true});
-        $close.setAttribute('look-at', "[camera]");
-        this.el.appendChild( $close )
+        this.$close = document.createElement('a-entity');
+        // this.$close.setAttribute('position','0.28 0 0');
+        this.$close.setAttribute('text',{value:'x',align:'center',color:'#1f1f1f',width:CloseSize,wrapCount:1.38,opacity:1,transparent: true});
+        this.$close.setAttribute('geometry', {primitive: 'circle', radius: CloseSize});
+        this.$close.setAttribute('material', {shader: 'flat', color: '#ffffff',opacity:1,transparent: true});
+        this.$close.setAttribute('raycastable', '');
+        this.$close.setAttribute('look-at', "[camera]");
+        this.el.appendChild( this.$close )
         
-        $close.addEventListener("click", this.closeBook.bind(this),false)
+        this.$close.addEventListener("click", this.closeBook.bind(this),false)
 
         // this.el.addEventListener('openBook',this.onOpen,false);
         this.onOpen()
@@ -136,15 +136,24 @@ AFRAME.registerComponent("book", {
     },
     o_animation:function(){
         // debugger;
+        console.log(this.$close.object3D.scale)
         let tl = AFRAME.ANIME.timeline({
             easing: 'easeOutExpo',
-            duration: 1000,
-            // delay:10000,
+            duration: 250,
+            complete:()=>{
+                AFRAME.ANIME({targets:this.$close.object3D.scale,x:1.5,y:1.5,loop: 8,delay:500,direction: 'alternate'})
+            }
         });
         tl
-        .add({targets:this.$book.object3D.position,z:-1})
-        .add({targets:this.$book.object3D.position,z:0.01,duration:1000})
+        // .add({targets:this.$book.object3D.position,z:-1})
+        .add({targets:this.$book.object3D.position,z:[-1,0.01],duration:1000})
         .add({targets:this.$book.object3D.rotation,y:25},'-=1000')
+        this.$prof_group.querySelectorAll('[prof]').forEach((item,i) => {
+            // debugger
+            tl.add({targets: item.object3D.position, ...profs[i].position},'-=200');
+        });
+        tl.add({targets:this.$close.object3D.position,x:[0,0.28]},'-=800')
+        // .add({targets:this.$close.object3D.scale,x:[1,1.5],y:[1,1.5],loop: 8})
     },
     onOpen: function(){
         console.log('open Book')

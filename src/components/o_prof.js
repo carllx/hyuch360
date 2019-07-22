@@ -265,11 +265,20 @@ AFRAME.registerComponent("o_prof", {
             }
             
             $book.setAttribute('book','')
-            const p = new THREE.Vector3( 0, 0, -0.5 );
+            const p = new THREE.Vector3( 0, 0, -0.7 );
             p.applyQuaternion( $cam.object3D.quaternion );
             p.add( $cam.object3D.position );
-            $book.object3D.position.copy(p)
+            $book.object3D.position.copy(p);
             // debugger
+            if (ga) {
+                console.log('ga-open_book')
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: '360',
+                    eventAction: 'open_book',
+                    // eventLabel: 'Fall Campaign'
+                    });
+            };
         }
     // update:function(oldData){
     //     if(oldData!==this.data) {debugger}

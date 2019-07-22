@@ -4,6 +4,13 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <% if(htmlWebpackPlugin.options.files) { %>
+        <!-- Google Tag Manager -->
+    <script>
+    var ga=()=>{};
+    </script>
+    <!-- End Google Tag Manager -->
+        <% } %>
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-state-component@6.6.0/dist/aframe-state-component.min.js"></script>
     <script src="https://unpkg.com/aframe-layout-component@4.3.1/dist/aframe-layout-component.min.js"></script>
@@ -12,6 +19,7 @@
 </head>
 
 <body>
+        
     <a-scene id="scene" vr-mode-ui="enabled: false">
         <a-assets preload="auto" >
             <!-- Room -->
@@ -107,11 +115,3 @@
 </body>
 
 </html>
-
-
-
-
-LOC-1 – 1.png	e4ae07_e5778ed7cef24d78b845619faa70851b~mv2.png
-UFFIZI -bianca.png	e4ae07_24024af2b18540208f1b4689ef0381d4~mv2.png
-PalazzoMedci-biaca.png	e4ae07_fe459cd820464052800d75f17d628d2d~mv2.png
-Mandragora.png	e4ae07_f363f75e121644d4a44739e110489ca6~mv2.png
