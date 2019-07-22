@@ -29,6 +29,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
+            title: '360VR - Palazzo Medici - Il regno della purezza',
             inject: false,
             hash: true,
             template: './src/index.html',

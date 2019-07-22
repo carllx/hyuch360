@@ -15,6 +15,15 @@ AFRAME.registerComponent("o_lang", {
         this.el.addEventListener("click",()=>{
             const l = this.data.text === 'ENGLISH'?'en':'it'
             AFRAME.scenes[0].emit('changeLanguage', {value:l },false)
+            if (ga) {
+                console.log('ga-use_language')
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: '360',
+                    eventAction: 'use_language',
+                    eventLabel: this.data.text
+                    });
+            };
         })
     
     },

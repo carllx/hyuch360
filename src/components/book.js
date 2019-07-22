@@ -162,6 +162,16 @@ AFRAME.registerComponent("book", {
         while (this.el.firstChild) {
             this.el.removeChild(this.el.firstChild);
         }
+        if (ga) {
+            console.log('ga-close_book')
+            ga('send', {
+                hitType: 'event',
+                eventCategory: '360',
+                eventAction: 'close_book',
+                // eventLabel: 'Fall Campaign'
+                });
+        };
+        
     },
     c_animation:function(){
 

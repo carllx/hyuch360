@@ -91,6 +91,16 @@ AFRAME.registerComponent("o_door", {
                 el.emit('onRoom',{id:this.data.index},false)
             }
 
+            if (ga) {
+                console.log('ga-enter_room')
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: '360',
+                    eventAction: 'enter_room',
+                    eventLabel: `sala_${this.data.index}`
+                    });
+            };
+
             // for (let i = 0; i < this.doorELs.length; i++) {
             //     const el = this.doorELs[i];
             //     el.emit('onRoom',{id:this.data.index},false)

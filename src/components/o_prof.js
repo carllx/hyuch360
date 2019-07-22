@@ -66,6 +66,18 @@ AFRAME.registerComponent("o_prof", {
             // debugger
             $EL.emit('open',{onProf:evt.detail.intersection.object.geometry.uuid,distance:evt.detail.intersection.distance})
             $close.setAttribute('raycastable','')
+            // console.log(this.data.title)
+            // console.log(this.data.value[0]['name'])
+            // debugger
+            if (ga) {
+                console.log('ga-read_Comment')
+                ga('send', {
+                    hitType: 'event',
+                    eventCategory: '360',
+                    eventAction: 'read-comment',
+                    eventLabel: `${this.data.title}-${this.data.value[0]['name']}`
+                    });
+            };
         },false)
         $area_prof.appendChild( $avatar );
         // EL  name
@@ -244,14 +256,12 @@ AFRAME.registerComponent("o_prof", {
         openBook:function(evt){
             
             const $book = this.el.sceneEl.querySelector('#book');
-            const $test = this.el.sceneEl.querySelector('#test');
+            // const $test = this.el.sceneEl.querySelector('#test');
             const $cam = this.el.sceneEl.querySelector('#cam');
             
             if(AFRAME.scenes[0])  {
                 const $scene =  AFRAME.scenes[0]
                 $scene.emit('zipRay',{})
-                
-                
             }
             
             $book.setAttribute('book','')
