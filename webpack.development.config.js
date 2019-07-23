@@ -29,7 +29,7 @@ module.exports = {
         contentBase: './dist'
     },
     plugins: [
-        new CleanWebpackPlugin(),   
+        // new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             files:{
                 ga_header: './src/static/ga_header.html',
