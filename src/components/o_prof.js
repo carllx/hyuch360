@@ -31,26 +31,36 @@ AFRAME.registerComponent("o_prof", {
         const $EL = this.el;
         this.c_width = 1;
         this.c_width_total = 0;
-        
+        this.AERA_professore_w = 0.7
+
         $EL.setAttribute('look-at', "[camera]");
         // 储存原始坐标
         let position = new THREE.Vector3(0, 0, 0);
         position = position.copy($EL.object3D.position)
         // BUG: 不能使用 this.position
         
+        //  debug Center
+        // ===============
+        const $dbugCenter = document.createElement('a-box');
+        $dbugCenter.setAttribute('color',"tomato");
+        $dbugCenter.setAttribute('depth',"0.005");
+        $dbugCenter.setAttribute('height',"2");
+        $dbugCenter.setAttribute('width',"0.005");
+        $EL.appendChild( $dbugCenter );
+
         //  BG
         // ===============
-        const $BG = document.createElement('a-box');
-        $BG.setAttribute('color',"tomato");
-        $BG.setAttribute('depth',"0.005");
-        $BG.setAttribute('height',"2");
-        $BG.setAttribute('width',"0.005");
-        $EL.appendChild( $BG );
+        const $BG = document.createElement('a-sphere');
+        $BG.setAttribute('material', {opacity: 0, side: 'back'});
+        $BG.setAttribute('geometry', {radius: 2.3, segmentsHeight: 9, segmentsWidth: 18});
+        // $BG.setAttribute('position', `0 0 0`);
+        $BG.setAttribute('color', `#030004`);
+        this.el.appendChild( $BG );
 
 
         // AERA  professore
         // ===============
-        const AERA_professore_w = 0.7
+        // this.AERA_professore_w = 0.7
         const $area_prof = document.createElement('a-entity');
         $area_prof.setAttribute('look-at', "[camera]");
 
@@ -84,12 +94,12 @@ AFRAME.registerComponent("o_prof", {
         $area_prof.appendChild( $avatar );
         // EL  name
         const $name= document.createElement('a-entity');
-        $name.setAttribute('text',{value:element['name'],width:AERA_professore_w,wrapCount:15,xOffset:0.18});
+        $name.setAttribute('text',{value:element['name'],width:this.AERA_professore_w,wrapCount:15,xOffset:0.18});
         $name.setAttribute('position', `0 -0.3 0`);
         $area_prof.appendChild( $name );
         // assessorato
         const $assor = document.createElement('a-entity');
-        $assor.setAttribute('text',{font:'sourcecodepro',value:`${element['assessorato']}`,baseline:'top',width:AERA_professore_w,wrapCount:20,xOffset:0.18,opacity:1,transparent: true});
+        $assor.setAttribute('text',{font:'sourcecodepro',value:`${element['assessorato']}`,baseline:'top',width:this.AERA_professore_w,wrapCount:20,xOffset:0.18,opacity:1,transparent: true});
         $assor.setAttribute('position','0 -0.37 0');
         $area_prof.appendChild( $assor );
         // ReadMore
@@ -205,6 +215,7 @@ AFRAME.registerComponent("o_prof", {
             .add({targets: $close.object3D.position,x: this.c_width_total-(this.c_width/3),y: 0,z: 0})
             .add({targets: $close.components.text.shaderObject.uniforms.opacity,value:1},'-=250')
             .add({targets: $close.components.material.material,opacity:1})
+            .add({targets: $BG.components.material.material,opacity:0.5})
         });
 
         // Debug Layout
@@ -249,6 +260,7 @@ AFRAME.registerComponent("o_prof", {
             .add({targets: $btn.components.text.shaderObject.uniforms.opacity,value:0},'-=20')
             .add({targets: $btn.components.material.material,opacity:0},'-=20')
             .add({targets: $assor.components.text.shaderObject.uniforms.opacity,value:1})
+            .add({targets: $BG.components.material.material,opacity:0})
         }
         $EL.addEventListener("close", animeClose)
         
